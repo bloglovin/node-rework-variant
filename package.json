@@ -1,0 +1,22 @@
+{
+  "name": "rework-variant",
+  "version": "0.1.0",
+  "description": "Another take on variables in Rework.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bloglovin/node-rework-variant"
+  },
+  "keywords": [
+    "rework",
+    "css",
+    "variables",
+    "var",
+    "vars"
+  ],
+  "author": "Simon Ljungberg <simon@bloglovin.com>",
+  "license": "MIT"
+}
