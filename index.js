@@ -1,30 +1,123 @@
-//
-// # Rework Variant
-//
-// A new take on Rework CSS variables.
-//
-module.exports = function (opts) {
-  opts = opts || { namespace: true };
-  return function (style) {
-    var vars = {};
-    var x = 0;
-    style.rules.forEach(function (rule, i) {
-      rule.selectors.forEach(function (sel) {
-        if (sel.indexOf('$') === 0) {
-          rule.declarations.forEach(function (d) {
-            vars[(opts.namespace ? sel + '.' : '$') + d.property] = d.value;
-          });
-          delete(style.rules[i]);
-        }
-        else {
-          rule.declarations.forEach(function (d) {
-            for (var j in vars) {
-              d.value = d.value.replace(j, vars[j]);
-            }
-          });
-        }
-      });
-    });
-  };
+
+/**
+ * Initialize the plugin callback with optional variable `map`.
+ *
+ * @param {Object} map
+ * @return {Function}
+ * @api public
+ */
+
+module.exports = function(map){
+  return function(style){
+    return new Variables(map).visit(style);
+  }
 };
 
+/**
+ * Initialize `Variables` visitor.
+ *
+ * @param {Object} map
+ * @api public
+ */
+
+function Variables(map) {
+  this.map = map || {};
+  this.visit = this.visit.bind(this);
+}
+
+/**
+ * Substitute variables in `str`.
+ *
+ * TODO: make sure we don't substitute within strings, url() etc.
+ *
+ * @param {String} str
+ * @return {String}
+ * @api private
+ */
+
+Variables.prototype.sub = function(str){
+  var self = this;
+  return str.replace(/\$([-.\w]+)/g, function(_, name){
+    return self.lookup(name);
+  });
+};
+
+/**
+ * Lookup variable `name`.
+ *
+ * @param {String} name
+ * @return {String}
+ * @api private
+ */
+
+Variables.prototype.lookup = function(name){
+  if (this.map.hasOwnProperty(name)) {
+    return this.map[name];
+  }
+
+  throw new Error('failed to lookup variable $' + name);
+};
+
+/**
+ * Visit stylesheet.
+ */
+
+Variables.prototype.stylesheet = function(node){
+  node.rules.forEach(this.visit);
+};
+
+/**
+ * Visit rule.
+ */
+
+Variables.prototype.rule = function(node){
+  var self = this;
+  var sel = node.selectors[0].trim();
+
+  // variables rule
+  if ('$' == sel[0]) {
+    var global = '$globals' == sel;
+    var name = sel.slice(1);
+
+    node.declarations.forEach(function(decl){
+      if (global) {
+        self.map[decl.property] = decl.value;
+      } else {
+        self.map[name + '.' + decl.property] = decl.value;
+      }
+    });
+
+    node.declarations = [];
+    return;
+  }
+
+  // regular rule
+  node.declarations.forEach(this.visit);
+};
+
+/**
+ * Visit declaration.
+ */
+
+Variables.prototype.declaration = function(node){
+  node.value = this.sub(node.value);
+};
+
+/**
+ * Visit media.
+ */
+
+Variables.prototype.media = function(node){
+  node.media = this.sub(node.media);
+  node.rules.forEach(this.visit);
+};
+
+/**
+ * Visit node.
+ */
+
+Variables.prototype.visit = function(node){
+  var type = node.type || 'stylesheet';
+  if (!this[type]) return;
+  this[type](node);
+};

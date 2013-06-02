@@ -18,5 +18,10 @@
     "vars"
   ],
   "author": "Simon Ljungberg <simon@bloglovin.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "should": "~1.2.2",
+    "mocha": "~1.10.0",
+    "rework": "~0.15.0"
+  }
 }

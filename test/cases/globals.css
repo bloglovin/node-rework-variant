@@ -1,0 +1,13 @@
+
+$globals {
+  blue: #2ccdec;
+  orange: #f33c27;
+}
+
+a {
+  color: $blue;
+}
+
+a:hover {
+  color: $orange;
+}
