@@ -13,7 +13,7 @@ function Variables(map) {
 // TODO: make sure we don't substitute within strings, url() etc.
 Variables.prototype.sub = function(str){
   var self = this;
-  return str.replace(/\$([-\w]+)/g, function(_, name){
+  return str.replace(/\$([-.\w]+)/g, function(_, name){
     return self.lookup(name);
   });
 };
@@ -32,12 +32,19 @@ Variables.prototype.stylesheet = function(node){
 
 Variables.prototype.rule = function(node){
   var self = this;
-  var sel = node.selectors[0];
+  var sel = node.selectors[0].trim();
 
-  // variable rule
+  // variables rule
   if ('$' == sel[0]) {
+    var global = '$globals' == sel;
+    var name = sel.slice(1);
+
     node.declarations.forEach(function(decl){
-      self.map[decl.property] = decl.value;
+      if (global) {
+        self.map[decl.property] = decl.value;
+      } else {
+        self.map[name + '.' + decl.property] = decl.value;
+      }
     });
 
     // TODO: remove rule when .parent is added to css-parse

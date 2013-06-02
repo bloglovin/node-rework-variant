@@ -1,0 +1,13 @@
+
+$colors {
+  blue: #2ccdec;
+  orange: #f33c27;
+}
+
+a {
+  color: $colors.blue;
+}
+
+a:hover {
+  color: $colors.orange;
+}
