@@ -60,6 +60,13 @@ Variables.prototype.declaration = function(node){
   node.value = this.sub(node.value);
 };
 
+Variables.prototype.media = function(node){
+  node.media = this.sub(node.media);
+  node.rules.forEach(this.visit);
+};
+
 Variables.prototype.visit = function(node){
-  this[node.type || 'stylesheet'](node);
+  var type = node.type || 'stylesheet';
+  if (!this[type]) return;
+  this[type](node);
 };

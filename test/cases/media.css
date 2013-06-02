@@ -1,0 +1,11 @@
+
+$globals {
+  phone-portrait: (min-device-width: 320px);
+  phone-landscape: (min-device-width: 480px);
+}
+
+@media screen and $phone-portrait and $phone-landscape {
+  body {
+    some: 'stuff';
+  }
+}
