@@ -31,6 +31,18 @@ Variables.prototype.stylesheet = function(node){
 };
 
 Variables.prototype.rule = function(node){
+  var self = this;
+  var sel = node.selectors[0];
+
+  // variable rul
+  if ('$' == sel[0]) {
+    node.declarations.forEach(function(decl){
+      self.map[decl.property] = decl.value;
+    });
+    return;
+  }
+
+  // regular rule
   node.declarations.forEach(this.visit);
 };
 
