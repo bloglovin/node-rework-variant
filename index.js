@@ -34,11 +34,14 @@ Variables.prototype.rule = function(node){
   var self = this;
   var sel = node.selectors[0];
 
-  // variable rul
+  // variable rule
   if ('$' == sel[0]) {
     node.declarations.forEach(function(decl){
       self.map[decl.property] = decl.value;
     });
+
+    // TODO: remove rule when .parent is added to css-parse
+    node.declarations = [];
     return;
   }
 
