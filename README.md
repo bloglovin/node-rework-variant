@@ -12,60 +12,61 @@ Install with npm:
 ## Usage
 
 ```js
-Variant = require('rework-variant');
-Rework(txt).use(Variant());
+var rework = require('rework');
+var variant = require('rework-variant');
+rework(txt).use(variant());
 ```
 
-Without namespacing:
+### Globals
+
+  The `$globals` rule allows variables to be referenced without a prefix:
 
 ```css
-$variables {
-  red: #f00;
-  blue: #00f;
+
+$globals {
+  blue: #2ccdec;
+  orange: #f33c27;
 }
 
-background {
-  background-color: $red;
+a {
   color: $blue;
 }
-```
 
-Yields:
-
-```css
-body {
-  background-color: #f00;
-  color: #00f;
+a:hover {
+  color: $orange;
 }
 ```
 
-**With** namespacing:
+  While other variable rules act as namespaces:
 
 ```css
 $colors {
-  red: #f00;
-  blue: #00f;
+  blue: #2ccdec;
+  orange: #f33c27;
 }
 
-$margin {
-  left: 20px;
-  right: 200px;
+a {
+  color: $colors.blue;
 }
 
-body {
-  background-color: $color.red;
-  color: $color.blue;
-  margin: 0 $margin.left 0 $margin.right;
+a:hover {
+  color: $colors.orange;
 }
 ```
 
-Yields:
+  Variables may be referenced in most places you'd expect:
 
 ```css
-body {
-  background-color: #f00;
-  color: #00f;
-  margin: 0 20px 0 200px;
+
+$globals {
+  phone-portrait: (min-device-width: 320px);
+  phone-landscape: (min-device-width: 480px);
+}
+
+@media screen and $phone-portrait and $phone-landscape {
+  body {
+    some: 'stuff';
+  }
 }
 ```
 
