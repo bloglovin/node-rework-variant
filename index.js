@@ -1,22 +1,54 @@
 
+/**
+ * Initialize the plugin callback with optional variable `map`.
+ *
+ * @param {Object} map
+ * @return {Function}
+ * @api public
+ */
+
 module.exports = function(map){
   return function(style){
     return new Variables(map).visit(style);
   }
 };
 
+/**
+ * Initialize `Variables` visitor.
+ *
+ * @param {Object} map
+ * @api public
+ */
+
 function Variables(map) {
   this.map = map || {};
   this.visit = this.visit.bind(this);
 }
 
-// TODO: make sure we don't substitute within strings, url() etc.
+/**
+ * Substitute variables in `str`.
+ *
+ * TODO: make sure we don't substitute within strings, url() etc.
+ *
+ * @param {String} str
+ * @return {String}
+ * @api private
+ */
+
 Variables.prototype.sub = function(str){
   var self = this;
   return str.replace(/\$([-.\w]+)/g, function(_, name){
     return self.lookup(name);
   });
 };
+
+/**
+ * Lookup variable `name`.
+ *
+ * @param {String} name
+ * @return {String}
+ * @api private
+ */
 
 Variables.prototype.lookup = function(name){
   if (this.map.hasOwnProperty(name)) {
@@ -26,9 +58,17 @@ Variables.prototype.lookup = function(name){
   throw new Error('failed to lookup variable $' + name);
 };
 
+/**
+ * Visit stylesheet.
+ */
+
 Variables.prototype.stylesheet = function(node){
   node.rules.forEach(this.visit);
 };
+
+/**
+ * Visit rule.
+ */
 
 Variables.prototype.rule = function(node){
   var self = this;
@@ -47,7 +87,6 @@ Variables.prototype.rule = function(node){
       }
     });
 
-    // TODO: remove rule when .parent is added to css-parse
     node.declarations = [];
     return;
   }
@@ -56,14 +95,26 @@ Variables.prototype.rule = function(node){
   node.declarations.forEach(this.visit);
 };
 
+/**
+ * Visit declaration.
+ */
+
 Variables.prototype.declaration = function(node){
   node.value = this.sub(node.value);
 };
+
+/**
+ * Visit media.
+ */
 
 Variables.prototype.media = function(node){
   node.media = this.sub(node.media);
   node.rules.forEach(this.visit);
 };
+
+/**
+ * Visit node.
+ */
 
 Variables.prototype.visit = function(node){
   var type = node.type || 'stylesheet';
