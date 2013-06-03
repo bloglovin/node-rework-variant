@@ -18,6 +18,9 @@
     "vars"
   ],
   "author": "Simon Ljungberg <simon@bloglovin.com>",
+  "contributors": [
+    { "name": "TJ Holowaychuck", "email": "<tj@vision-media.ca>"}
+  ],
   "license": "MIT",
   "devDependencies": {
     "should": "~1.2.2",
