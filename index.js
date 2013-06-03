@@ -10,7 +10,7 @@
 module.exports = function(map){
   return function(style){
     return new Variables(map).visit(style);
-  }
+  };
 };
 
 /**
