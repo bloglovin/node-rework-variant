@@ -1,0 +1,8 @@
+
+$globals {
+  margin: 2.5cm;
+}
+
+@page {
+  margin: $margin;
+}

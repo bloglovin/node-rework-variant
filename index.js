@@ -129,6 +129,14 @@ Variables.prototype.keyframe = function(node){
 };
 
 /**
+ * Visit page.
+ */
+
+Variables.prototype.page = function(node){
+  node.declarations.forEach(this.visit);
+};
+
+/**
  * Visit document.
  */
 
