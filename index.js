@@ -28,7 +28,7 @@ function Variables(map) {
 /**
  * Substitute variables in `str`.
  *
- * TODO: make sure we don't substitute within strings, url() etc.
+ * TODO: make sure we don't substitute within strings, url() etc without ${}
  *
  * @param {String} str
  * @return {String}
