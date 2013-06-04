@@ -113,6 +113,14 @@ Variables.prototype.media = function(node){
 };
 
 /**
+ * Visit supports.
+ */
+
+Variables.prototype.supports = function(node){
+  node.rules.forEach(this.visit);
+};
+
+/**
  * Visit keyframes.
  */
 
