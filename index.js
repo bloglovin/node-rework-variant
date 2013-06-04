@@ -113,6 +113,22 @@ Variables.prototype.media = function(node){
 };
 
 /**
+ * Visit keyframes.
+ */
+
+Variables.prototype.keyframes = function(node){
+  node.keyframes.forEach(this.visit);
+};
+
+/**
+ * Visit keyframe.
+ */
+
+Variables.prototype.keyframe = function(node){
+  node.declarations.forEach(this.visit);
+};
+
+/**
  * Visit node.
  */
 

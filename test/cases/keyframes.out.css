@@ -1,8 +1,8 @@
-
 @keyframes fade {
   from {
     color: #888;
   }
+
   to {
     color: #eee;
   }
