@@ -129,6 +129,14 @@ Variables.prototype.keyframe = function(node){
 };
 
 /**
+ * Visit document.
+ */
+
+Variables.prototype.document = function(node){
+  node.rules.forEach(this.visit);
+};
+
+/**
  * Visit node.
  */
 
