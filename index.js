@@ -28,7 +28,7 @@ function Variables(map) {
 /**
  * Substitute variables in `str`.
  *
- * TODO: make sure we don't substitute within strings, url() etc.
+ * TODO: make sure we don't substitute within strings, url() etc without ${}
  *
  * @param {String} str
  * @return {String}
@@ -109,6 +109,46 @@ Variables.prototype.declaration = function(node){
 
 Variables.prototype.media = function(node){
   node.media = this.sub(node.media);
+  node.rules.forEach(this.visit);
+};
+
+/**
+ * Visit supports.
+ */
+
+Variables.prototype.supports = function(node){
+  node.rules.forEach(this.visit);
+};
+
+/**
+ * Visit keyframes.
+ */
+
+Variables.prototype.keyframes = function(node){
+  node.keyframes.forEach(this.visit);
+};
+
+/**
+ * Visit keyframe.
+ */
+
+Variables.prototype.keyframe = function(node){
+  node.declarations.forEach(this.visit);
+};
+
+/**
+ * Visit page.
+ */
+
+Variables.prototype.page = function(node){
+  node.declarations.forEach(this.visit);
+};
+
+/**
+ * Visit document.
+ */
+
+Variables.prototype.document = function(node){
   node.rules.forEach(this.visit);
 };
 

@@ -1,0 +1,14 @@
+
+$colors {
+  dark: #888;
+  light: #eee;
+}
+
+@keyframes fade {
+  from {
+    color: $colors.dark;
+  }
+  to {
+    color: $colors.light;
+  }
+}

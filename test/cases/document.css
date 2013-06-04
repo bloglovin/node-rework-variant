@@ -1,0 +1,10 @@
+
+$globals {
+  foo: bar;
+}
+
+@-moz-document url-prefix()  {
+  foo {
+    color: $foo;
+  }
+}
