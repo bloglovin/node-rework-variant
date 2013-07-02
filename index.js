@@ -87,6 +87,8 @@ Variables.prototype.rule = function(node){
       }
     });
 
+    this.updateMap();
+
     node.declarations = [];
     return;
   }
@@ -120,4 +122,21 @@ Variables.prototype.visit = function(node){
   var type = node.type || 'stylesheet';
   if (!this[type]) return;
   this[type](node);
+};
+
+/**
+ * Update Variables w/in variables.
+ */
+
+Variables.prototype.updateMap = function() {
+  var repeat = false;
+  do {
+    repeat = false;
+    for(var key in this.map) {
+      if(/\$([-.\w]+)/.test(this.map[key])) {
+        repeat = true;
+        this.map[key] = this.sub(this.map[key]);
+      }
+    }
+  } while(repeat);
 };
