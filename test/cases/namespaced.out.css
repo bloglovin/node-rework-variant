@@ -3,6 +3,10 @@ a {
   color: #2ccdec;
 }
 
+a.lightBlue {
+  color: lighten(#2ccdec, 20%);
+}
+
 a:hover {
   color: #f33c27;
 }
