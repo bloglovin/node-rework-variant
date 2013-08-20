@@ -1,0 +1,10 @@
+
+$globals {
+  supports-flex-color: red;
+}
+
+@supports (display: flex) {
+  div {
+    background: $supports-flex-color;
+  }
+}

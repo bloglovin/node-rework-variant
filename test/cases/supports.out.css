@@ -1,0 +1,6 @@
+
+@supports (display: flex) {
+  div {
+    background: red;
+  }
+}
