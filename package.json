@@ -1,6 +1,6 @@
 {
   "name": "rework-variant",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Another take on variables in Rework.",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,8 @@
   ],
   "author": "Simon Ljungberg <simon@bloglovin.com>",
   "contributors": [
-    { "name": "TJ Holowaychuck", "email": "<tj@vision-media.ca>"}
+    { "name": "TJ Holowaychuck", "email": "<tj@vision-media.ca>"},
+    { "name": "Ryan Schmukler", "email": ""}
   ],
   "license": "MIT",
   "devDependencies": {
