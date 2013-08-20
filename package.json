@@ -1,6 +1,6 @@
 {
   "name": "rework-variant",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Another take on variables in Rework.",
   "main": "index.js",
   "scripts": {
@@ -28,3 +28,4 @@
     "rework": "~0.15.0"
   }
 }
+
