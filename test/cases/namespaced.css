@@ -1,11 +1,16 @@
 
 $colors {
   blue: #2ccdec;
+  lightBlue: lighten(#2ccdec, 20%);
   orange: #f33c27;
 }
 
 a {
   color: $colors.blue;
+}
+
+a.lightBlue {
+  color: $colors.lightBlue
 }
 
 a:hover {
